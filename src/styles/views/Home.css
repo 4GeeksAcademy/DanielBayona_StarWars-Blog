@@ -1,0 +1,22 @@
+.custom-underline {
+    display: flex ;
+    justify-content: center;
+    color: white; 
+}
+
+.custom-underline::after {
+    content: '';
+    display: flex ;
+    justify-content: center;
+    left: 0;
+    bottom: -10px; 
+    width: 50%;
+    height: 2px; 
+    background-color: #fff; 
+}
+
+
+
+.slick-slide {
+ padding-left: 0px;
+}

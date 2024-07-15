@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop.jsx";
 import Home from "./views/Home.jsx";
-
+import ItemDetail from "./component/ItemDetail.jsx"; 
 import injectContext from "./store/appContext.jsx";
 
 
@@ -19,6 +19,7 @@ const Layout = () => {
 			
 					<Routes>
 						<Route path="/" element={<Home/>} />
+						<Route path="/:nature/:id" element={<ItemDetail/>}/>
 					</Routes>
 				
 				</ScrollToTop>

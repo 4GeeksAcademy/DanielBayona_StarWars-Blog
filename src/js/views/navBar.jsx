@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 import "../../styles/component/navBar.css"
+import { Context } from "../store/appContext.jsx";
 import starWarsLogo from "../../img/star-wars-logo-994.png";
 
 
 const NavBar = () =>{
+    const {store,actions} =  useContext(Context);
+
     return(
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid pt-2">
@@ -16,12 +19,19 @@ const NavBar = () =>{
                         <li className="nav-item">
                             <div className="dropdown">
                                 <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Favorites
+                                    Favorites {store.favorites.length}
                                 </button>
                                 <ul className="dropdown-menu dropdown-menu-center">
-                                    <li><button className="dropdown-item" type="button">Action</button></li>
-                                    <li><button className="dropdown-item" type="button">Another action</button></li>
-                                    <li><button className="dropdown-item" type="button">Something else here</button></li>
+                                    {
+                                        store.favorites.map((item) => {
+                                            return (
+                                                <li className="d-flex px-2">
+                                                    <a className="dropdown-item" href="#">{item.properties.name}</a>
+										            <span onClick={() => actions.deleteFav(item)}><i class="far fa-trash-alt"></i></span>
+                                                </li>
+                                            )
+                                        })
+                                    }
                                 </ul>
                             </div>
                         </li>

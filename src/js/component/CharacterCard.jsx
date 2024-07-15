@@ -2,20 +2,22 @@ import React, {useEffect, useContext, useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { Context } from "../store/appContext.jsx";
+import { Link } from "react-router-dom";
 
-const CharacterCard = ({people, planets}) => {
+const CharacterCard = ({people, moreInfoPeople, favorites}) => {
 
-    const { store } = useContext(Context);
+    const { store, actions } = useContext(Context);
+    const [planetName, setplanetName] = useState({})
 
-    const getHomeWorld = () => {
+    const getHomeWorld = async () => {
         const homeworldUrl = people?.properties.homeworld;
-        console.log("Homeworld URL:", homeworldUrl);
-        const homeworld = store.planets.find(
-            (planet) => planet.url === homeworldUrl
-        );
-        console.log("Homeworld:", homeworld);
-        return homeworld
+        let response = await actions.getOnePlanet(homeworldUrl);
+        setplanetName(response);
     };
+
+    useEffect(() =>{
+        getHomeWorld()
+    },[])
 
 
     return (
@@ -25,10 +27,10 @@ const CharacterCard = ({people, planets}) => {
                 <h5 className="card-title">{people?.properties.name}</h5>
                 <p className="card-text">{`Gender: ${people?.properties.gender}`}</p>
                 <p className="card-text">{`Height: ${people?.properties.height} cm`}</p>
-                <p className="card-text">{`Homeworld: ${getHomeWorld()}`}</p>
+                <p className="card-text">{`Homeworld: ${planetName?.properties?.name}`}</p>
                 <div className="d-flex justify-content-between w-100">
-                    <a href="#" className="btn btn-primary w-50">Learn More!</a>
-                    <a href="#" className="btn btn-danger ml-auto w-25 me-3"><FontAwesomeIcon icon={faHeart} /></a>
+                    <Link to={`/people/${moreInfoPeople}`}className="btn btn-primary w-50">Learn More!</Link>
+                    <a href="#" onClick={favorites} className= {store.favorites.includes(favorites) ? "": "btn btn-danger ml-auto w-25 me-3"}><FontAwesomeIcon icon={faHeart} /></a>
                 </div>
             </div>
         </div>

@@ -3,6 +3,8 @@ import Slider from "react-slick";
 import AnimatedBackground from "../component/backGround.jsx";
 import NavBar from "./navBar.jsx";
 import CharacterCard from "../component/CharacterCard.jsx";
+import StarshipsCard from "../component/StarshipsCard.jsx";
+import PlanetCard from "../component/planetCard.jsx";
 import "../../styles/views/Home.css"
 import {Context} from "../store/appContext.jsx"
 
@@ -67,7 +69,7 @@ const Home = () =>{
         <>
         <AnimatedBackground/>
         <NavBar/>
-        <div className="container-fluid d-flex justify-content-center p-5">
+        <div className="container-fluid d-flex flex-column justify-content-center p-5">
             <div className="container-fluid">
                 <h1 className="text-white d-flex justify-content-center align-items-center">
                     Characters
@@ -80,7 +82,8 @@ const Home = () =>{
                     <div key={item}>
                     <CharacterCard
                     people={item}
-                    planets={store.planets}
+                    moreInfoPeople={item._id}
+                    favorites={() => actions.addFavorites(item)}
                     />
                     </div>
                  ))
@@ -88,6 +91,48 @@ const Home = () =>{
                 </Slider>
                 </div>
             </div>
+            <div className="container-fluid pt-5">
+                <h1 className="text-white d-flex justify-content-center align-items-center">
+                    Starships
+                </h1>
+                <div className="custom-underline pb-5"></div>
+                <div className="slider-container">
+                  <Slider {...settings}>
+                  {
+                  store.starships.map((item) => (
+                      <div key={item}>
+                      <StarshipsCard
+                      starships={item}
+                      moreStarshipsInfo={item._id}
+                      favorites={() => actions.addFavorites(item)}
+                      />
+                      </div>
+                  ))
+                  }
+                  </Slider>
+                </div>
+             </div>
+             <div className="container-fluid pt-5">
+                <h1 className="text-white d-flex justify-content-center align-items-center">
+                    Planets
+                </h1>
+                <div className="custom-underline pb-5"></div>
+                <div className="slider-container">
+                  <Slider {...settings}>
+                  {
+                  store.planets.map((item) => (
+                      <div key={item}>
+                      <PlanetCard
+                      planets={item}
+                      moreInfoPlanets={item._id}
+                      favorites={() => actions.addFavorites(item)}
+                      />
+                      </div>
+                  ))
+                  }
+                  </Slider>
+                </div>
+              </div>
         </div>
         </>
     )
